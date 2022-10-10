@@ -1,1 +1,49 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Library</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title_bar">
+                <h1>Library</h1>
+            </div>
+            <div class="user_info">
+                <img class="avatar" src="avatar-svgrepo-com.svg" alt="avatar of woman with brown hair and red shirt">
+                <p>Username</p>
+            </div>
+        </div>
+        <div class="body">
+            <div class="cardholder">
+                <div class="card">
+                    <label class="switch">
+                        <p>Read?</p>
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                    <p>Author</p>
+                    <p>Title</p>
+                    <p>Pages</p>
+                    <span id="close" onclick="this.parentNode.parentNode.remove(); return false;">x</span>
+                </div>
+            </div>
+        </div>
+        <div class="add_button">
+            <button> Open Modal</button>
+            <div class="modal" id="modal">
+                <h1>Author name</h1>
+                <label for="author_name"></label>
+                <input type="text" name>
+                <h2>Title</h2>
+                <label for="title"></label>
+                <input type="text"
+            </div>
+        </div>
+    </div>
+</body>
+</html>
