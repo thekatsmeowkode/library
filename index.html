@@ -26,8 +26,8 @@
                 <div class="card">
                     <button class="if-read">Not Read</button>
                     <p id="card-author">Author</p>
-                    <p>Title</p>
-                    <p>Pages</p>
+                    <p id="card-title">Title</p>
+                    <p id="card-pages">Pages</p>
                     <span id="close-button" onclick="this.parentNode.parentNode.remove(); return false;">&times;</span>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                     <h1>Add a New Book</h1>
                     <button data-close-button class="modal-close-button">&times;</button>
                 </div>
-                <form>
+                <form class="user-form">
                     <label for="author-name">Author's Name</label>
                     <input type="text" name="author-name" id="author-name">
                     <br>
