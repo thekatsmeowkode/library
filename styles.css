@@ -110,3 +110,18 @@
     pointer-events:all;
 
 }
+
+.if-read.active {
+    cursor:pointer;
+    border:none;
+    outline:none;
+    background-color:green;
+}
+
+.if-read {
+    cursor:pointer;
+    border:none;
+    outline:none;
+    background-color: pink;
+    padding:15px;
+}

@@ -24,12 +24,8 @@
         <div class="body">
             <div class="cardholder">
                 <div class="card">
-                    <label class="switch">
-                        <p>Read?</p>
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                    <p>Author</p>
+                    <button class="if-read">Not Read</button>
+                    <p id="card-author">Author</p>
                     <p>Title</p>
                     <p>Pages</p>
                     <span id="close-button" onclick="this.parentNode.parentNode.remove(); return false;">&times;</span>
@@ -37,26 +33,30 @@
             </div>
         </div>
         <div class="add-button">
-            <button data-modal-target="#modal"> Open Modal</button>
+            <button class="data-modal-target" data-modal-target="#modal"> Open Modal</button>
             <div class="modal" id="modal">
                 <div class="modal-header">
                     <h1>Add a New Book</h1>
                     <button data-close-button class="modal-close-button">&times;</button>
                 </div>
-                <label for="author-name">Author's Name</label>
-                <input type="text" name="author-name" id="author-name">
-                <br>
-                <label for="title">Title</label>
-                <input type="text" name="title" id="title">
-                <br>
-                <label for="pages">Number of Pages</label>
-                <input type="number" name="pages" id="pages">
-                <br>
-                <h2>Read?</h2>
-                <label for="yes">Yes</label>
-                <input type="radio" name="if_read" id="yes" value="yes">
-                <label for="no">No</label>
-                <input type="radio" name="if_read" id="no" value="no">
+                <form>
+                    <label for="author-name">Author's Name</label>
+                    <input type="text" name="author-name" id="author-name">
+                    <br>
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title">
+                    <br>
+                    <label for="pages">Number of Pages</label>
+                    <input type="number" name="pages" id="pages">
+                    <br>
+                    <label for="if-read-modal">Read?</label>
+                    <select name="read-status" id="if-read-modal">
+                        <option value="yes">Read</option>
+                        <option value="no">Not Read</option>
+                    </select>
+                    <button id="submit">Add to Library</button>
+                </form>
+                
             </div>
             <div id="overlay"></div>
         </div>

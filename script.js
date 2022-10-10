@@ -1,7 +1,7 @@
 const openModal = document.querySelectorAll('[data-modal-target]');
 const closeModal = document.querySelectorAll('[data-close-button]')
 const overlay = document.getElementById('overlay')
-const checkBox = document.get
+const readButton = document.querySelector('.if-read')
 
 openModal.forEach(button => 
     {button.addEventListener('click', () => {
@@ -31,13 +31,12 @@ overlay.addEventListener('click', () => {
     const modals = document.querySelectorAll('.modal.active')
     modals.forEach(modal => closeModalFunction(modal))
 })
+//
+readButton.addEventListener('click', (e) => {
+    e.target.classList.toggle('active')
+})
 
-function toggle() {
-    const readButton = document.querySelector('#if-read');
-    readButton.forEach(button => {button.addEventListener('click', () => {
-        readButton.classList.toggle('active')
-    })})}
-
+//
 let array = []
 
 class Book {
