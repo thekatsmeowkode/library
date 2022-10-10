@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
     <title>Library</title>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -29,21 +32,35 @@
                     <p>Author</p>
                     <p>Title</p>
                     <p>Pages</p>
-                    <span id="close" onclick="this.parentNode.parentNode.remove(); return false;">x</span>
+                    <span id="close-button" onclick="this.parentNode.parentNode.remove(); return false;">&times;</span>
                 </div>
             </div>
         </div>
-        <div class="add_button">
-            <button> Open Modal</button>
+        <div class="add-button">
+            <button data-modal-target="#modal"> Open Modal</button>
             <div class="modal" id="modal">
-                <h1>Author name</h1>
-                <label for="author_name"></label>
-                <input type="text" name>
-                <h2>Title</h2>
-                <label for="title"></label>
-                <input type="text"
+                <div class="modal-header">
+                    <h1>Add a New Book</h1>
+                    <button data-close-button class="modal-close-button">&times;</button>
+                </div>
+                <label for="author-name">Author's Name</label>
+                <input type="text" name="author-name" id="author-name">
+                <br>
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title">
+                <br>
+                <label for="pages">Number of Pages</label>
+                <input type="number" name="pages" id="pages">
+                <br>
+                <h2>Read?</h2>
+                <label for="yes">Yes</label>
+                <input type="radio" name="if_read" id="yes" value="yes">
+                <label for="no">No</label>
+                <input type="radio" name="if_read" id="no" value="no">
             </div>
+            <div id="overlay"></div>
         </div>
     </div>
 </body>
+
 </html>
