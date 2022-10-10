@@ -6,6 +6,7 @@ const submit = document.getElementById('submit')
 const author = document.getElementById('card-author')
 const title = document.getElementById('card-title')
 const pages = document.getElementById('card-pages')
+const cardholder = document.querySelector('.cardholder')
 
 openModal.forEach(button => 
     {button.addEventListener('click', () => {
@@ -63,12 +64,38 @@ function addBook(e) {
     let book = new Book(title, author, pages, read)
     array.push(book)
     console.log(array)
+    makeNewElement(book)
 }
 
 submit.addEventListener('click', addBook);
 
-array.forEach(function() {
+function makeNewElement(book) {
     let newCard = document.createElement('div');
     newCard.className = "card";
-    
-})
+    cardholder.appendChild(newCard)
+    //
+    let cardReadStatus = document.createElement('button')
+    cardReadStatus.className="if-read"
+    cardReadStatus.value="notRead"
+    cardReadStatus.textContent= "Not Read"
+    newCard.appendChild(cardReadStatus)
+    //
+    let cardAuthor = document.createElement('p')
+    cardAuthor.id = "card-author"
+    cardAuthor.textContent = `${book.author}`
+    newCard.appendChild(cardAuthor)
+    //
+    let cardTitle = document.createElement('p')
+    cardTitle.id = "card-title"
+    cardTitle.textContent = `${book.title}`
+    newCard.appendChild(cardTitle)
+    //
+    let cardPages = document.createElement('p')
+    cardPages.id = "card-pages"
+    cardPages.textContent = `${book.pages}`
+    newCard.appendChild(cardPages)
+    //
+    let newDiv = document.createElement('div')
+    newDiv.innerHTML = '<span id="close-button" onclick="this.parentNode.parentNode.remove(); return false;">&times;</span>'
+    newCard.appendChild(newDiv)
+}
