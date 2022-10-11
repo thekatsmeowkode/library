@@ -21,19 +21,8 @@
                 <p>Username</p>
             </div>
         </div>
-        <div class="body">
-            <div class="cardholder">
-                <div class="card">
-                    <button class="if-read">Not Read</button>
-                    <p id="card-author">Author</p>
-                    <p id="card-title">Title</p>
-                    <p id="card-pages">Pages</p>
-                    <span id="close-button" onclick="this.parentNode.parentNode.remove(); return false;">&times;</span>
-                </div>
-            </div>
-        </div>
         <div class="add-button">
-            <button class="data-modal-target" data-modal-target="#modal"> Open Modal</button>
+            <button id="modal-button" class="data-modal-target" data-modal-target="#modal">Add New Book</button>
             <div class="modal" id="modal">
                 <div class="modal-header">
                     <h1>Add a New Book</h1>
@@ -51,14 +40,25 @@
                     <br>
                     <label for="if-read-modal">Read?</label>
                     <select name="read-status" id="if-read-modal">
-                        <option value="yes">Read</option>
-                        <option value="no">Not Read</option>
+                        <option value="true">Read</option>
+                        <option value="false">Not Read</option>
                     </select>
                     <button id="submit">Add to Library</button>
                 </form>
                 
             </div>
             <div id="overlay"></div>
+        </div>
+        <div class="body">
+            <div class="cardholder">
+                <div class="card">
+                    <button class="if-read" value="false">Not Read</button>
+                    <p id="card-author">Author</p>
+                    <p id="card-title">Title</p>
+                    <p id="card-pages">Pages</p>
+                    <span id="close-button" onclick="this.parentNode.remove(); return false;">&times;</span>
+                </div>
+            </div>
         </div>
     </div>
 </body>
