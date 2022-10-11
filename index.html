@@ -38,21 +38,18 @@
                     <label for="pages">Number of Pages</label>
                     <input type="number" name="pages" id="pages">
                     <br>
-                    <label for="if-read-modal">Read?</label>
-                    <select name="read-status" id="if-read-modal">
-                        <option value="true">Read</option>
-                        <option value="false">Not Read</option>
-                    </select>
+                    <label for="checkbox">Read</label>
+                        <input type="checkbox" class="checkbox" id="checkbox" name="checkbox">
                     <button id="submit">Add to Library</button>
                 </form>
-                
             </div>
             <div id="overlay"></div>
         </div>
         <div class="body">
             <div class="cardholder">
                 <div class="card">
-                    <button class="if-read" value="false">Not Read</button>
+                    <label for="checkbox">Read</label>
+                        <input type="checkbox" class="checkbox" id="checkbox" name="checkbox">
                     <p id="card-author">Author</p>
                     <p id="card-title">Title</p>
                     <p id="card-pages">Pages</p>

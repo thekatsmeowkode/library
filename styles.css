@@ -107,24 +107,6 @@
 
 }
 
-.if-read.active {
-    cursor:pointer;
-    border:none;
-    outline:none;
-    background-color:green;
-}
-
-.if-read {
-    cursor:pointer;
-    border:none;
-    outline:none;
-    background-color: pink;
-    padding:15px;
-}
-
-.add_button {
-    
-}
 
 #modal-button {
     position:relative;
