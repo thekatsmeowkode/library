@@ -28,18 +28,22 @@
                     <h1>Add a New Book</h1>
                     <button data-close-button class="modal-close-button">&times;</button>
                 </div>
-                <form class="user-form">
+                <form class="user-form" id="user-form">
                     <label for="author-name">Author's Name</label>
+                    <br>
                     <input type="text" name="author-name" id="author-name">
                     <br>
                     <label for="title">Title</label>
+                    <br>
                     <input type="text" name="title" id="title">
                     <br>
                     <label for="pages">Number of Pages</label>
+                    <br>
                     <input type="number" name="pages" id="pages">
                     <br>
-                    <label for="checkbox">Read</label>
-                        <input type="checkbox" class="checkbox" id="checkbox" name="checkbox">
+                    <label for="checkbox">Read?</label>
+                    <input type="checkbox" class="checkbox" id="checkbox" name="checkbox">
+                    <br>
                     <button id="submit">Add to Library</button>
                 </form>
             </div>
@@ -48,7 +52,7 @@
         <div class="body">
             <div class="cardholder">
                 <div class="card">
-                    <label for="checkbox">Read</label>
+                    <label for="checkbox">Read?</label>
                         <input type="checkbox" class="checkbox" id="checkbox" name="checkbox">
                     <p id="card-author">Author</p>
                     <p id="card-title">Title</p>

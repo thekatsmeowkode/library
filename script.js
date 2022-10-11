@@ -58,7 +58,6 @@ function addBook(e) {
     let read = document.querySelector('input[name=checkbox]').checked
     let book = new Book(title, author, pages, read)
     array.push(book)
-    console.log(array)
     makeNewCard(book)
     reset()
 }
@@ -77,7 +76,6 @@ function makeNewCard(book) {
     inputElement.classList.add('checkbox')
     inputElement.checked = (book.read ? true : false)
     inputElement.addEventListener('click', function() {
-        // inputElement.checked = !inputElement.checked
         if (book.read == false) {return inputElement.checked == false}
         else {inputElement.checked == true}
     })
