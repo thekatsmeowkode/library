@@ -65,7 +65,6 @@ function addBook(e) {
 
 submit.addEventListener('click', (e) => {
     let isValid = form.checkValidity()
-    e.target.setAttribute('aria-invalid', !isValid) 
     if (!isValid) {
         console.log('error')}
     if (isValid) {
@@ -73,7 +72,10 @@ submit.addEventListener('click', (e) => {
         addBook(e)}}
     );
 
-
+input.addEventListener('change', (e) => {
+    const isValid = e.target.reportValidity()
+    e.target.setAttribute('aria-invalid', !isValid)
+})
 
 function makeNewCard(book) {
     //
