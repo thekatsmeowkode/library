@@ -184,5 +184,5 @@ input:invalid {
 }
 
 input:focus:invalid {
-    background:#bbc4ff
+    background:#bbc4ffa3
 }

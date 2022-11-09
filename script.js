@@ -6,6 +6,8 @@ const author = document.getElementById('card-author')
 const title = document.getElementById('card-title')
 const pages = document.getElementById('card-pages')
 const cardholder = document.querySelector('.cardholder')
+const form = document.querySelector('#user-form')
+const input = document.querySelector('input')
 
 openModal.forEach(button => 
     {button.addEventListener('click', () => {
@@ -51,7 +53,6 @@ class Book {
 // const book3 = new Book("Begin to Code with JAvascript", "Rob Miles", "500 pages")
 
 function addBook(e) {
-    e.preventDefault()
     let title = document.querySelector('input[name=title]').value
     let author = document.querySelector('input[name=author-name]').value
     let pages = document.querySelector('input[name=pages]').value
@@ -62,7 +63,17 @@ function addBook(e) {
     reset()
 }
 
-submit.addEventListener('click', addBook);
+submit.addEventListener('click', (e) => {
+    let isValid = form.checkValidity()
+    e.target.setAttribute('aria-invalid', !isValid) 
+    if (!isValid) {
+        console.log('error')}
+    if (isValid) {
+        e.preventDefault()
+        addBook(e)}}
+    );
+
+
 
 function makeNewCard(book) {
     //
