@@ -46,9 +46,9 @@ class Book {
         this.read = read
     }}
 
-//   const book1 = new Book("The Hobbit", "JRR Tolkien", "256 pages")
-//   const book2 = new Book("Song of Ice and Fire", "George RR Martin", "3,000 pages")
-//   const book3 = new Book("Begin to Code with JAvascript", "Rob Miles", "500 pages")
+// const book1 = new Book("The Hobbit", "JRR Tolkien", "256 pages")
+// const book2 = new Book("Song of Ice and Fire", "George RR Martin", "3,000 pages")
+// const book3 = new Book("Begin to Code with JAvascript", "Rob Miles", "500 pages")
 
 function addBook(e) {
     e.preventDefault()
@@ -65,10 +65,33 @@ function addBook(e) {
 submit.addEventListener('click', addBook);
 
 function makeNewCard(book) {
+    //
     let newCard = document.createElement('div');
     newCard.className = "card";
     cardholder.appendChild(newCard)
     //
+    let newDiv = document.createElement('div')
+    newDiv.classList.add('close-card')
+    newDiv.innerHTML = '<span id="close-button" onclick="this.parentNode.parentNode.remove(); return false;">&times;</span>'
+    newCard.appendChild(newDiv)
+    //
+    let cardTitle = document.createElement('p')
+    cardTitle.id = "card-title"
+    cardTitle.textContent = `${book.title}`
+    newCard.appendChild(cardTitle)
+    //
+    let cardAuthor = document.createElement('p')
+    cardAuthor.id = "card-author"
+    cardAuthor.textContent = `${book.author}`
+    newCard.appendChild(cardAuthor)
+    //
+    let cardPages = document.createElement('p')
+    cardPages.id = "card-pages"
+    cardPages.textContent = `${book.pages}`
+    newCard.appendChild(cardPages)
+    //
+    let readDiv = document.createElement('div')
+    readDiv.classList.add('readDiv')
     let read = document.createElement('p')
     read.textContent="Read?"
     const inputElement = document.createElement('input')
@@ -79,31 +102,18 @@ function makeNewCard(book) {
         if (book.read == false) {return inputElement.checked == false}
         else {inputElement.checked == true}
     })
-    newCard.appendChild(read)
-    newCard.appendChild(inputElement)
+    readDiv.appendChild(read)
+    readDiv.appendChild(inputElement)
+    newCard.appendChild(readDiv)
     //
-    let cardAuthor = document.createElement('p')
-    cardAuthor.id = "card-author"
-    cardAuthor.textContent = `${book.author}`
-    newCard.appendChild(cardAuthor)
-    //
-    let cardTitle = document.createElement('p')
-    cardTitle.id = "card-title"
-    cardTitle.textContent = `${book.title}`
-    newCard.appendChild(cardTitle)
-    //
-    let cardPages = document.createElement('p')
-    cardPages.id = "card-pages"
-    cardPages.textContent = `${book.pages}`
-    newCard.appendChild(cardPages)
-    //
-    let newDiv = document.createElement('div')
-    newDiv.innerHTML = '<span id="close-button" onclick="this.parentNode.parentNode.remove(); return false;">&times;</span>'
-    newCard.appendChild(newDiv)
+   
 }
 
 function reset() {
+    document.querySelector('#user-form').reset()
     let modal = document.getElementById('modal')
     modal.classList.remove('active');
     overlay.classList.remove('active')
 }
+
+//function 

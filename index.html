@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merienda">
     <script src="script.js" defer></script>
     <title>Library</title>
 </head>
@@ -18,7 +19,7 @@
             </div>
             <div class="user_info">
                 <img class="avatar" src="avatar-svgrepo-com.svg" alt="avatar of woman with brown hair and red shirt">
-                <p>Username</p>
+                <p>@username</p>
             </div>
         </div>
         <div class="add-button">
@@ -31,15 +32,15 @@
                 <form class="user-form" id="user-form">
                     <label for="author-name">Author's Name</label>
                     <br>
-                    <input type="text" name="author-name" id="author-name">
+                    <input type="text" name="author-name" id="author-name" required>
                     <br>
                     <label for="title">Title</label>
                     <br>
-                    <input type="text" name="title" id="title">
+                    <input type="text" name="title" id="title" required>
                     <br>
                     <label for="pages">Number of Pages</label>
                     <br>
-                    <input type="number" name="pages" id="pages">
+                    <input type="number" name="pages" id="pages" required>
                     <br>
                     <label for="checkbox">Read?</label>
                     <input type="checkbox" class="checkbox" id="checkbox" name="checkbox">
@@ -51,14 +52,14 @@
         </div>
         <div class="body">
             <div class="cardholder">
-                <div class="card">
+                <!-- <div class="card">
                     <label for="checkbox">Read?</label>
-                        <input type="checkbox" class="checkbox" id="checkbox" name="checkbox">
+                    <input type="checkbox" class="checkbox" id="checkbox" name="checkbox">
                     <p id="card-author">Author</p>
                     <p id="card-title">Title</p>
                     <p id="card-pages">Pages</p>
                     <span id="close-button" onclick="this.parentNode.remove(); return false;">&times;</span>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
