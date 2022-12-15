@@ -1,5 +1,17 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp} from 'firebase/app';
+import { getFirestore, collection, getDocs } from 'firebase/firestore/lite'
 import stylesheet from './styles.css'
+const openModal = document.querySelectorAll('[data-modal-target]');
+const closeModal = document.querySelectorAll('[data-close-button]')
+const overlay = document.getElementById('overlay')
+const submit = document.getElementById('submit')
+const author = document.getElementById('card-author')
+const title = document.getElementById('card-title')
+const pages = document.getElementById('card-pages')
+const cardholder = document.querySelector('.cardholder')
+const form = document.querySelector('#user-form')
+const input = document.querySelector('input')
+const dummy = document.querySelector('#dummy')
 
 const firebaseConfig = {
     apiKey: "AIzaSyBJsvFKHr3agdq2Fu4SNAyk53hGuyi0RQ4",
@@ -13,23 +25,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// async function getCities(db) {
-//     const citiesCol = collection(db, 'cities');
-//     const citySnapshot = await getDocs(citiesCol);
-//     const cityList = citySnapshot.docs.map(doc => doc.data());
-//     return cityList;
-//   }
+async function getBooks(db) {
+    const bookCol = collection(db, 'books');
+    const bookSnapshot = await getDocs(bookCol);
+    const bookList = bookSnapshot.docs.map(doc => doc.data());
+    console.log(bookList)
+    return bookList;
+  }
 
-const openModal = document.querySelectorAll('[data-modal-target]');
-const closeModal = document.querySelectorAll('[data-close-button]')
-const overlay = document.getElementById('overlay')
-const submit = document.getElementById('submit')
-const author = document.getElementById('card-author')
-const title = document.getElementById('card-title')
-const pages = document.getElementById('card-pages')
-const cardholder = document.querySelector('.cardholder')
-const form = document.querySelector('#user-form')
-const input = document.querySelector('input')
+  dummy.addEventListener('click', () => getBooks(db))
 
 openModal.forEach(button => 
     {button.addEventListener('click', () => {

@@ -12,7 +12,7 @@ module.exports = {
         assetModuleFilename: '[name][ext]',
         clean:true,
     },
-    devtool: 'source-map',
+    devtool: 'eval-source-map',
     devServer: {
         static: path.resolve(__dirname, 'dist'),
         port: 8080, 

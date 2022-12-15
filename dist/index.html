@@ -1,1 +1,69 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="styles.css"><title>Library</title><script defer="defer" src="main.87535307a26e3d8fe11f.js"></script></head><body><div class="container"><div class="header"><div class="title_bar"><h1>Library</h1></div><div class="user_info"><img class="avatar" src="avatar-svgrepo-com.svg" alt="avatar of woman with brown hair and red shirt"><p>@username</p></div></div><div class="add-button"><button id="modal-button" class="data-modal-target" data-modal-target="#modal">Add New Book</button><div class="modal" id="modal"><div class="modal-header"><h1>Add a New Book</h1><button data-close-button class="modal-close-button">&times;</button></div><form class="user-form" id="user-form"><label for="author-name">Author's Name</label><br><input name="author-name" id="author-name" class="req-fields" required><br><label for="title">Title</label><br><input name="title" id="title" class="req-fields" required><br><label for="pages">Number of Pages</label><br><input type="number" name="pages" id="pages" class="req-fields" required><br><label for="checkbox">Read?</label> <input type="checkbox" class="checkbox" id="checkbox" name="checkbox"><br><button id="submit">Add to Library</button></form></div><div id="overlay"></div></div><div class="body"><div class="cardholder"></div></div></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merienda"> -->
+    <!-- <script src="index.js" defer></script> -->
+    <title>Library</title>
+<script defer src="main.59c1fe060301437b90bd.js"></script></head>
+
+<body>
+    <div class="container">
+        <button id="dummy">Press for data</button>
+        <div class="header">
+            <div class="title_bar">
+                <h1>Library</h1>
+            </div>
+            <div class="user_info">
+                <img class="avatar" src="avatar-svgrepo-com.svg" alt="avatar of woman with brown hair and red shirt">
+                <p>@username</p>
+            </div>
+        </div>
+        <div class="add-button">
+            <button id="modal-button" class="data-modal-target" data-modal-target="#modal">Add New Book</button>
+            <div class="modal" id="modal">
+                <div class="modal-header">
+                    <h1>Add a New Book</h1>
+                    <button data-close-button class="modal-close-button">&times;</button>
+                </div>
+                <form class="user-form" id="user-form">
+                    <label for="author-name">Author's Name</label>
+                    <br>
+                    <input type="text" name="author-name" id="author-name" class="req-fields" required>
+                    <br>
+                    <label for="title">Title</label>
+                    <br>
+                    <input type="text" name="title" id="title" class="req-fields" required>
+                    <br>
+                    <label for="pages">Number of Pages</label>
+                    <br>
+                    <input type="number" name="pages" id="pages" class="req-fields" required>
+                    <br>
+                    <label for="checkbox">Read?</label>
+                    <input type="checkbox" class="checkbox" id="checkbox" name="checkbox">
+                    <br>
+                    <button id="submit">Add to Library</button>
+                </form>
+            </div>
+            <div id="overlay"></div>
+        </div>
+        <div class="body">
+            <div class="cardholder">
+                <!-- <div class="card">
+                    <label for="checkbox">Read?</label>
+                    <input type="checkbox" class="checkbox" id="checkbox" name="checkbox">
+                    <p id="card-author">Author</p>
+                    <p id="card-title">Title</p>
+                    <p id="card-pages">Pages</p>
+                    <span id="close-button" onclick="this.parentNode.remove(); return false;">&times;</span>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
