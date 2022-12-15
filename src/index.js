@@ -1,4 +1,5 @@
 import { initializeApp} from 'firebase/app';
+import { doc, setDoc } from "firebase/firestore"; 
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite'
 import stylesheet from './styles.css'
 const openModal = document.querySelectorAll('[data-modal-target]');
@@ -72,17 +73,39 @@ class Book {
         this.author = author
         this.pages = pages
         this.read = read
-    }}
+    }
+    toString() {return this.title + ', ' + this.author + ', ' + this.pages + ', ' + this.read}
+}
 
 // const book1 = new Book("The Hobbit", "JRR Tolkien", "256 pages")
 // const book2 = new Book("Song of Ice and Fire", "George RR Martin", "3,000 pages")
 // const book3 = new Book("Begin to Code with JAvascript", "Rob Miles", "500 pages")
 
-function addBook(e) {
+// Firestore data converter
+const bookConverter = {
+    toFirestore: (book) => {
+        return {
+            title: book.title,
+            author: book.author,
+            pages: book.pages,
+            read: book.read
+            };
+    },
+    fromFirestore: (snapshot, options) => {
+        const data = snapshot.data(options);
+        return new Book(data.title, data.author, data.pages, data.read);
+    }
+};
+
+async function addBook(e) {
     let title = document.querySelector('input[name=title]').value
     let author = document.querySelector('input[name=author-name]').value
     let pages = document.querySelector('input[name=pages]').value
     let read = document.querySelector('input[name=checkbox]').checked
+
+    const ref = doc(db, "books", `${title}`).withConverter(bookConverter);
+    await setDoc(ref, new book(title, author, pages, read));
+
     let book = new Book(title, author, pages, read)
     array.push(book)
     makeNewCard(book)
