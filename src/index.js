@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import stylesheet from './styles.css'
 
 const firebaseConfig = {
     apiKey: "AIzaSyBJsvFKHr3agdq2Fu4SNAyk53hGuyi0RQ4",
@@ -12,12 +13,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-async function getCities(db) {
-    const citiesCol = collection(db, 'cities');
-    const citySnapshot = await getDocs(citiesCol);
-    const cityList = citySnapshot.docs.map(doc => doc.data());
-    return cityList;
-  }
+// async function getCities(db) {
+//     const citiesCol = collection(db, 'cities');
+//     const citySnapshot = await getDocs(citiesCol);
+//     const cityList = citySnapshot.docs.map(doc => doc.data());
+//     return cityList;
+//   }
 
 const openModal = document.querySelectorAll('[data-modal-target]');
 const closeModal = document.querySelectorAll('[data-close-button]')
