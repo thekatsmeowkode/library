@@ -1,10 +1,23 @@
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-    //...
+    apiKey: "AIzaSyBJsvFKHr3agdq2Fu4SNAyk53hGuyi0RQ4",
+    authDomain: "todolist-9d800.firebaseapp.com",
+    projectId: "todolist-9d800",
+    storageBucket: "todolist-9d800.appspot.com",
+    messagingSenderId: "930080224034",
+    appId: "1:930080224034:web:5dd5952cb72ed245332b7b"
   };
 
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+async function getCities(db) {
+    const citiesCol = collection(db, 'cities');
+    const citySnapshot = await getDocs(citiesCol);
+    const cityList = citySnapshot.docs.map(doc => doc.data());
+    return cityList;
+  }
 
 const openModal = document.querySelectorAll('[data-modal-target]');
 const closeModal = document.querySelectorAll('[data-close-button]')
