@@ -1,3 +1,11 @@
+import { initializeApp } from 'firebase/app';
+
+const firebaseConfig = {
+    //...
+  };
+
+const app = initializeApp(firebaseConfig);
+
 const openModal = document.querySelectorAll('[data-modal-target]');
 const closeModal = document.querySelectorAll('[data-close-button]')
 const overlay = document.getElementById('overlay')
