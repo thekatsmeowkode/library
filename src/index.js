@@ -1,6 +1,6 @@
 import { initializeApp} from 'firebase/app';
-import { doc, setDoc } from "firebase/firestore"; 
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite'
+// import { doc, setDoc } from "firebase/firestore"; 
+import { getFirestore, collection, getDocs, doc, setDoc} from 'firebase/firestore/lite'
 import stylesheet from './styles.css'
 const openModal = document.querySelectorAll('[data-modal-target]');
 const closeModal = document.querySelectorAll('[data-close-button]')
@@ -26,15 +26,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-async function getBooks(db) {
-    const bookCol = collection(db, 'books');
-    const bookSnapshot = await getDocs(bookCol);
-    const bookList = bookSnapshot.docs.map(doc => doc.data());
-    console.log(bookList)
-    return bookList;
-  }
+// async function getBooks(db) {
+//     const bookCol = collection(db, 'books', 'book');
+//     const bookSnapshot = await getDocs(bookCol);
+//     const bookList = bookSnapshot.docs.map(doc => doc.data());
+//     console.log(bookList)
+//     return bookList;
+//   }
 
-  dummy.addEventListener('click', () => getBooks(db))
+//   dummy.addEventListener('click', () => getBooks(db))
 
 openModal.forEach(button => 
     {button.addEventListener('click', () => {
@@ -101,10 +101,10 @@ async function addBook(e) {
     let title = document.querySelector('input[name=title]').value
     let author = document.querySelector('input[name=author-name]').value
     let pages = document.querySelector('input[name=pages]').value
-    let read = document.querySelector('input[name=checkbox]').checked
+    let read = document.querySelector('input[name=checkbox]').checked ? true : false
 
     const ref = doc(db, "books", `${title}`).withConverter(bookConverter);
-    await setDoc(ref, new book(title, author, pages, read));
+    await setDoc(ref, new Book(title, author, pages, read));
 
     let book = new Book(title, author, pages, read)
     array.push(book)
