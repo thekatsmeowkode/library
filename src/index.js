@@ -1,6 +1,6 @@
 import { initializeApp} from 'firebase/app';
 // import { doc, setDoc } from "firebase/firestore"; 
-import { getFirestore, collection, getDocs, doc, setDoc} from 'firebase/firestore/lite'
+import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc} from 'firebase/firestore/lite'
 import stylesheet from './styles.css'
 const openModal = document.querySelectorAll('[data-modal-target]');
 const closeModal = document.querySelectorAll('[data-close-button]')
@@ -25,16 +25,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-// async function getBooks(db) {
-//     const bookCol = collection(db, 'books', 'book');
-//     const bookSnapshot = await getDocs(bookCol);
-//     const bookList = bookSnapshot.docs.map(doc => doc.data());
-//     console.log(bookList)
-//     return bookList;
-//   }
-
-//   dummy.addEventListener('click', () => getBooks(db))
 
 openModal.forEach(button => 
     {button.addEventListener('click', () => {
@@ -102,10 +92,10 @@ async function addBook(e) {
     let author = document.querySelector('input[name=author-name]').value
     let pages = document.querySelector('input[name=pages]').value
     let read = document.querySelector('input[name=checkbox]').checked ? true : false
-
+    //add to firebase server
     const ref = doc(db, "books", `${title}`).withConverter(bookConverter);
     await setDoc(ref, new Book(title, author, pages, read));
-
+    //render to DOM
     let book = new Book(title, author, pages, read)
     array.push(book)
     makeNewCard(book)
@@ -134,7 +124,7 @@ function makeNewCard(book) {
     //
     let newDiv = document.createElement('div')
     newDiv.classList.add('close-card')
-    newDiv.innerHTML = '<span id="close-button" onclick="this.parentNode.parentNode.remove(); return false;">&times;</span>'
+    newDiv.innerHTML = '<span id="close-button" class="deleteButton" >&times;</span>'
     newCard.appendChild(newDiv)
     //
     let cardTitle = document.createElement('p')
@@ -168,7 +158,7 @@ function makeNewCard(book) {
     readDiv.appendChild(inputElement)
     newCard.appendChild(readDiv)
     //
-   
+   updateListeners()
 }
 
 function reset() {
@@ -178,4 +168,19 @@ function reset() {
     overlay.classList.remove('active')
 }
 
-//function 
+async function deleteBook(cardTitle) {
+    await deleteDoc(doc(db, "books", cardTitle))
+}
+
+function updateListeners() {
+[...document.querySelectorAll('.card')].forEach(item => {
+    item.addEventListener('click', (e) => {
+        if (e.target.classList.contains('deleteButton'))
+        {
+        let parent = e.target.parentNode.parentNode
+        let cardTitle = parent.querySelector('#card-title').textContent
+        deleteBook(cardTitle)
+        item.remove()
+        return false}
+    })})}
+
