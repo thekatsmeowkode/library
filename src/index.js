@@ -1,6 +1,6 @@
 import { initializeApp} from 'firebase/app';
 // import { doc, setDoc } from "firebase/firestore"; 
-import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc} from 'firebase/firestore/lite'
+import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, updateDoc} from 'firebase/firestore/lite'
 import stylesheet from './styles.css'
 const openModal = document.querySelectorAll('[data-modal-target]');
 const closeModal = document.querySelectorAll('[data-close-button]')
@@ -148,7 +148,7 @@ function makeNewCard(book) {
     read.textContent="Read?"
     const inputElement = document.createElement('input')
     inputElement.type = 'checkbox'
-    inputElement.classList.add('checkbox')
+    inputElement.classList.add('dynamicCheckbox')
     inputElement.checked = (book.read ? true : false)
     inputElement.addEventListener('click', function() {
         if (book.read == false) {return inputElement.checked == false}
@@ -158,7 +158,8 @@ function makeNewCard(book) {
     readDiv.appendChild(inputElement)
     newCard.appendChild(readDiv)
     //
-   updateListeners()
+   updateDeleteBookListeners()
+   updateCheckboxListener()
 }
 
 function reset() {
@@ -172,7 +173,7 @@ async function deleteBook(cardTitle) {
     await deleteDoc(doc(db, "books", cardTitle))
 }
 
-function updateListeners() {
+function updateDeleteBookListeners() {
 [...document.querySelectorAll('.card')].forEach(item => {
     item.addEventListener('click', (e) => {
         if (e.target.classList.contains('deleteButton'))
@@ -184,3 +185,17 @@ function updateListeners() {
         return false}
     })})}
 
+function updateCheckboxListener() {
+    [...document.querySelectorAll('.dynamicCheckbox')].forEach(box => {
+        let cardTitle = box.parentNode.parentNode.querySelector('#card-title').textContent
+        console.log(cardTitle)
+        box.addEventListener('change', (e) => {
+            console.log(box.checked)
+        if (box.checked === false) {callUpdate(cardTitle, false)}
+        else {callUpdate(cardTitle, true)}})})
+}
+
+async function callUpdate(title, bool) {
+    let bookRef = doc(db, "books", title)
+    await updateDoc(bookRef, {read:bool})
+}
