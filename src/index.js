@@ -1,6 +1,8 @@
 import { initializeApp} from 'firebase/app';
-// import { doc, setDoc } from "firebase/firestore"; 
+var firebase = require('firebase');
+var firebaseui = require('firebaseui');
 import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, updateDoc} from 'firebase/firestore/lite'
+import {getAuth} from 'firebase/auth'
 import stylesheet from './styles.css'
 const openModal = document.querySelectorAll('[data-modal-target]');
 const closeModal = document.querySelectorAll('[data-close-button]')
@@ -12,7 +14,6 @@ const pages = document.getElementById('card-pages')
 const cardholder = document.querySelector('.cardholder')
 const form = document.querySelector('#user-form')
 const input = document.querySelector('input')
-const dummy = document.querySelector('#dummy')
 
 const firebaseConfig = {
     apiKey: "AIzaSyBJsvFKHr3agdq2Fu4SNAyk53hGuyi0RQ4",
@@ -22,6 +23,69 @@ const firebaseConfig = {
     messagingSenderId: "930080224034",
     appId: "1:930080224034:web:5dd5952cb72ed245332b7b"
   };
+
+// Initialize the FirebaseUI Widget using Firebase.
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+ui.start('#firebaseui-auth-container', {
+    signInOptions: [
+      {
+        provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD
+      },
+      {
+        provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        scopes: [
+          'https://www.googleapis.com/auth/contacts.readonly'
+        ],
+        customParameters: {
+          // Forces account selection even when one account
+          // is available.
+          prompt: 'select_account'
+        }
+      }
+    ],
+    // Other config options...
+  });
+
+  // Is there an email link sign-in?
+if (ui.isPendingRedirect()) {
+    ui.start('#firebaseui-auth-container', uiConfig);
+  }
+  // This can also be done via:
+  if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+    ui.start('#firebaseui-auth-container', uiConfig);
+  }
+
+
+  var uiConfig = {
+    callbacks: {
+      signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+        // User successfully signed in.
+        // Return type determines whether we continue the redirect automatically
+        // or whether we leave that to developer to handle.
+        return true;
+      },
+      uiShown: function() {
+        // The widget is rendered.
+        // Hide the loader.
+        document.getElementById('loader').style.display = 'none';
+      }
+    },
+    // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+    signInFlow: 'popup',
+    signInSuccessUrl: '<url-to-redirect-to-on-success>',
+    signInOptions: [
+      // Leave the lines as is for the providers you want to offer your users.
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID
+    ],
+    // Terms of service url.
+    tosUrl: '<your-tos-url>',
+    // Privacy policy url.
+    privacyPolicyUrl: '<your-privacy-policy-url>'
+  };
+
+  ui.start('#firebaseui-auth-container', uiConfig);
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -54,8 +118,6 @@ overlay.addEventListener('click', () => {
     const modals = document.querySelectorAll('.modal.active')
     modals.forEach(modal => closeModalFunction(modal))
 })
-
-let array = []
 
 class Book {
     constructor(title, author, pages, read) {
@@ -97,7 +159,6 @@ async function addBook(e) {
     await setDoc(ref, new Book(title, author, pages, read));
     //render to DOM
     let book = new Book(title, author, pages, read)
-    array.push(book)
     makeNewCard(book)
     reset()
 }
@@ -169,10 +230,6 @@ function reset() {
     overlay.classList.remove('active')
 }
 
-async function deleteBook(cardTitle) {
-    await deleteDoc(doc(db, "books", cardTitle))
-}
-
 function updateDeleteBookListeners() {
 [...document.querySelectorAll('.card')].forEach(item => {
     item.addEventListener('click', (e) => {
@@ -188,9 +245,7 @@ function updateDeleteBookListeners() {
 function updateCheckboxListener() {
     [...document.querySelectorAll('.dynamicCheckbox')].forEach(box => {
         let cardTitle = box.parentNode.parentNode.querySelector('#card-title').textContent
-        console.log(cardTitle)
         box.addEventListener('change', (e) => {
-            console.log(box.checked)
         if (box.checked === false) {callUpdate(cardTitle, false)}
         else {callUpdate(cardTitle, true)}})})
 }
@@ -198,4 +253,8 @@ function updateCheckboxListener() {
 async function callUpdate(title, bool) {
     let bookRef = doc(db, "books", title)
     await updateDoc(bookRef, {read:bool})
+}
+
+async function deleteBook(cardTitle) {
+    await deleteDoc(doc(db, "books", cardTitle))
 }
