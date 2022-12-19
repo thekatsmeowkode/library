@@ -13,6 +13,7 @@ module.exports = {
         clean:true,
     },
     devtool: 'eval-source-map',
+    watch:true,
     devServer: {
         static: path.resolve(__dirname, 'dist'),
         port: 8080, 

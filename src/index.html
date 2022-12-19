@@ -7,8 +7,6 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Merienda&display=swap");
     </style>
-    <script src="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
     <title>Library</title>
   </head>
 
@@ -19,8 +17,15 @@
           <h1>Library</h1>
         </div>
         <div class="user_info">
-            <div id="firebaseui-auth-container"></div>
-            <div id="loader">Loading...</div>
+          <div id="firebaseui-auth-container">
+            <form>
+              <input type="text" class="email" />
+              <input type="password" class="password" />
+              <button class="login-button" type="button">Login</button>
+              <button class="signup-button" type="button">Sign Up</button>
+            </form>
+          </div>
+          <div id="loader">Loading...</div>
           <p>@username</p>
         </div>
       </div>
