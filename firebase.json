@@ -8,6 +8,11 @@
     },
     "ui": {
       "enabled": true
+    },
+    "firestore": {
+      "name": "firestore",
+      "host": "localhost",
+      "port": 8080
     }
   },
   "hosting": {

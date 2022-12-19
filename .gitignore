@@ -2,3 +2,5 @@ node_modules
 dist
 firebase-debug.log
 ui-debug.log
+bower_components
+.github/workflows

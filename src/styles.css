@@ -1,8 +1,11 @@
-* {
-    margin:0;
-    padding:0;
+:root {
     font-family:"Merienda", sans-serif;
     --burgundy: #5e0913
+}
+
+* {
+    margin: 0;
+    padding: 0;
 }
 
 .container {
@@ -16,7 +19,7 @@
     grid-area: 1 / 1 / 2 / 2;
     background-image: linear-gradient(to bottom, #bbc4ff, #cfd2ff, #e1e0ff, #f1efff, #ffffff);
     display:flex;
-    justify-content: center;
+    justify-content: space-between;
     gap: 1em;
 }
 
@@ -32,6 +35,7 @@
     gap: 15px;
     margin: 20px;
     font-size: 20px;
+    flex-direction:column;
     color:var(--burgundy)
 }
 
@@ -198,4 +202,45 @@ input:focus:invalid {
     padding: 5px;
     margin:5px;
     border:1px solid var(--burgundy)
+}
+
+#login-items-container {
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.login-state {
+    font-size: 14px;
+}
+
+.login-buttons {
+    display: flex;
+    justify-content: center;
+    gap:10px;
+}
+
+.login-buttons > * {
+    padding:5px;
+}
+
+.login-fields {
+    display:flex;
+    gap:10px;
+    margin:10px;
+}
+
+.logout-button {
+    padding: 5px;
+    font-size: 14px;
+    background-color: #cbd3ff;
+    cursor:pointer;
+    border-radius: 10px;
+    padding:10px;
+    border:.5px solid var(--burgundy);
+    color:var(--burgundy);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.logout-button:hover {
+    background-color:#bbc4ff; 
+    border: 2px solid var(--burgundy)
 }

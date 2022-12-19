@@ -15,14 +15,10 @@ import {
   connectAuthEmulator,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signInWithCustomToken,
-  onAuthStateChanged
+  onAuthStateChanged,
+  AuthErrorCodes
 } from "firebase/auth";
 import { GoogleAuthProvider, signOut, signInWithPopup } from "firebase/auth";
-// import firebase from 'firebase/compat/app';
-// import 'firebase/compat/auth';
-// import * as firebaseui from 'firebaseui'
-// import 'firebaseui/dist/firebaseui.css'
 
 const openModal = document.querySelectorAll("[data-modal-target]");
 const closeModal = document.querySelectorAll("[data-close-button]");
@@ -35,9 +31,11 @@ const loginButton = document.querySelector(".login-button");
 const signupButton = document.querySelector(".signup-button");
 const email = document.querySelector(".email");
 const password = document.querySelector(".password");
-const loginState = document.querySelector('.login-state')
-const logoutBtn = document.querySelector('.logout-button')
-const googleLoginButton = document.querySelector('.google-login-button')
+const loginState = document.querySelector(".login-state");
+const logoutBtn = document.querySelector(".logout-button");
+const googleLoginButton = document.querySelector(".google-login-button");
+const loginFields = document.querySelector('.login-fields')
+const loginButtons = document.querySelector('.login-buttons')
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJsvFKHr3agdq2Fu4SNAyk53hGuyi0RQ4",
@@ -52,6 +50,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 connectAuthEmulator(auth, "http://localhost:9099");
+connectFirestoreEmulator(db, 'localhost', 8080)
 
 const loginEmailPassword = async () => {
   const loginEmail = email.value;
@@ -66,7 +65,7 @@ const loginEmailPassword = async () => {
     console.log(userCredential.user);
   } catch (error) {
     console.log(error);
-    //need to add function that shows user readable error message
+    showLoginError(error)
   }
 };
 
@@ -84,117 +83,78 @@ const createAccount = async () => {
     console.log(userCredential.user);
   } catch (error) {
     console.log(error);
-    //need to add function that shows user readable error message
+    showLoginError(error)
   }
 };
 
 signupButton.addEventListener("click", createAccount);
 
 const monitorAuthState = async () => {
-    onAuthStateChanged(auth, user => {
-        if (user) {
-            console.log(user)
-            const showLoginState = (user) => {
-                loginState.innerHTML = `You're logged in as ${user.displayName} (uid: ${user.uid}, email: ${user.email}) `
-              }
-            showLoginState(user)
-        }
-        else {
-            loginState.innerHTML = "You're not logged in fool"
-        }
-    })
-    
-}
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log(user);
+      hideLoginFields()
+      showSignoutButton();
+      const showLoginState = (user) => {
+        loginState.innerHTML = `You're logged in as ${user.email}`;
+      };
+      showLoginState(user);
+    } else {
+      loginState.innerHTML = "You're not logged in yet";
+      showLoginFields()
+      hideLogoutButton()
+    }
+  });
+};
 
-monitorAuthState()
+monitorAuthState();
 
 const logout = async () => {
-    await signOut(auth)
-}
+  await signOut(auth);
+};
 
-logoutBtn.addEventListener('click', logout)
+logoutBtn.addEventListener("click", logout);
 
 const googleLogin = () => {
-    const googleProvider = new GoogleAuthProvider
-    signInWithPopup(auth, googleProvider)
+  const googleProvider = new GoogleAuthProvider();
+  signInWithPopup(auth, googleProvider)
     .then(() => {
-        window.location.assign('./profile')
+      window.location.assign("./profile");
     })
-    .catch(error => {
-        console.error(error)
-    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+
+googleLoginButton.addEventListener("click", googleLogin);
+
+function showSignoutButton() {
+  logoutBtn.style.display = "block";
 }
 
-googleLoginButton.addEventListener('click', googleLogin)
+function hideLogoutButton() {
+    logoutBtn.style.display = 'none'
+}
 
+function hideLoginFields() {
+    loginButtons.style.display = 'none'
+    loginFields.style.display = 'none'
+}
 
-//   initApp = function() {
-//     firebase.auth().onAuthStateChanged(function(user) {
-//       if (user) {
-//         // User is signed in.
-//         var displayName = user.displayName;
-//         var email = user.email;
-//         var emailVerified = user.emailVerified;
-//         var photoURL = user.photoURL;
-//         var uid = user.uid;
-//         var phoneNumber = user.phoneNumber;
-//         var providerData = user.providerData;
-//         user.getIdToken().then(function(accessToken) {
-//           document.getElementById('sign-in-status').textContent = 'Signed in';
-//           document.getElementById('sign-in').textContent = 'Sign out';
-//           document.getElementById('account-details').textContent = JSON.stringify({
-//             displayName: displayName,
-//             email: email,
-//             emailVerified: emailVerified,
-//             phoneNumber: phoneNumber,
-//             photoURL: photoURL,
-//             uid: uid,
-//             accessToken: accessToken,
-//             providerData: providerData
-//           }, null, '  ');
-//         });
-//       } else {
-//         // User is signed out.
-//         document.getElementById('sign-in-status').textContent = 'Signed out';
-//         document.getElementById('sign-in').textContent = 'Sign in';
-//         document.getElementById('account-details').textContent = 'null';
-//       }
-//     }, function(error) {
-//       console.log(error);
-//     });
-//   };
+function showLoginFields() {
+    loginButtons.style.display = 'flex'
+    loginFields.style.display = 'flex'
+}
 
-//   window.addEventListener('load', function() {
-//     initApp()
-//   });
-
-//   var uiConfig = {
-//     signInSuccessUrl: '<url-to-redirect-to-on-success>',
-//     signInOptions: [
-//       // Leave the lines as is for the providers you want to offer your users.
-//       firebase.auth.GoogleAuthProvider.PROVIDER_ID
-//     ],
-//     // tosUrl and privacyPolicyUrl accept either url string or a callback
-//     // function.
-//     // Terms of service url/callback.
-//     tosUrl: '<your-tos-url>',
-//     // Privacy policy url/callback.
-//     privacyPolicyUrl: function() {
-//       window.location.assign('<your-privacy-policy-url>');
-//     }
-//   };
-
-//       signInWithCustomToken(auth, token)
-//         .then((userCredential) => {
-//           // Signed in
-//           const user = userCredential.user;
-//           // ...
-//         })
-//         .catch((error) => {
-//           const errorCode = error.code;
-//           const errorMessage = error.message;
-//           // ...
-//         });
+const showLoginError = (error) => {
+    loginState.style.display = 'block'    
+    if (error.code == AuthErrorCodes.INVALID_PASSWORD) {
+      loginState.innerHTML = `Wrong password. Try again.`
+    }
+    else {
+      loginState.innerHTML = `Error: ${error.message}`      
+    }
+  }
 
 openModal.forEach((button) => {
   button.addEventListener("click", () => {

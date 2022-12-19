@@ -17,20 +17,28 @@
           <h1>Library</h1>
         </div>
         <div class="user_info">
-          <div id="firebaseui-auth-container">
             <form>
-              <input type="text" class="email" />
-              <input type="password" class="password" />
-              <button class="login-button" type="button">Login</button>
-              <button class="signup-button" type="button">Sign Up</button>
+              <div id="login-items-container">
+                <div class="login-fields">
+                  <label for="email">Email:</label>
+                  <input type="text" name="email" class="email" />
+                  <label for="password">Password:</label>
+                  <input type="password" name="password" class="password" />
+                </div>
+                <div class="login-buttons">
+                  <button class="login-button" type="button">
+                    Login With Email
+                  </button>
+                  <button class="signup-button" type="button">
+                    Sign Up With Email
+                  </button>
+                  <button type='button' class="google-login-button">Login With Google</button>
+                </div>
+              </div>
             </form>
             <p class="login-state"></p>
             <button class="logout-button">Logout</button>
-            <button class="google-login-button">Google Login</button>
           </div>
-          <div id="loader">Loading...</div>
-          <p>@username</p>
-        </div>
       </div>
       <div class="add-button">
         <button
