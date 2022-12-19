@@ -16,6 +16,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithCustomToken,
+  onAuthStateChanged
 } from "firebase/auth";
 import { GoogleAuthProvider, signOut, signInWithPopup } from "firebase/auth";
 // import firebase from 'firebase/compat/app';
@@ -34,6 +35,9 @@ const loginButton = document.querySelector(".login-button");
 const signupButton = document.querySelector(".signup-button");
 const email = document.querySelector(".email");
 const password = document.querySelector(".password");
+const loginState = document.querySelector('.login-state')
+const logoutBtn = document.querySelector('.logout-button')
+const googleLoginButton = document.querySelector('.google-login-button')
 
 const firebaseConfig = {
   apiKey: "AIzaSyBJsvFKHr3agdq2Fu4SNAyk53hGuyi0RQ4",
@@ -48,12 +52,6 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 connectAuthEmulator(auth, "http://localhost:9099");
-const provider = new GoogleAuthProvider();
-
-// // Initialize the FirebaseUI Widget using Firebase.
-// var ui = new firebaseui.auth.AuthUI(firebase.auth());
-// // The start method will wait until the DOM is loaded.
-// ui.start('#firebaseui-auth-container', uiConfig);
 
 const loginEmailPassword = async () => {
   const loginEmail = email.value;
@@ -92,24 +90,43 @@ const createAccount = async () => {
 
 signupButton.addEventListener("click", createAccount);
 
-//   signInWithPopup(auth, provider)
-//   .then((result) => {
-//     // This gives you a Google Access Token. You can use it to access the Google API.
-//     const credential = GoogleAuthProvider.credentialFromResult(result);
-//     const token = credential.accessToken;
-//     // The signed-in user info.
-//     const user = result.user;
-//     // ...
-//   }).catch((error) => {
-//     // Handle Errors here.
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // The email of the user's account used.
-//     const email = error.customData.email;
-//     // The AuthCredential type that was used.
-//     const credential = GoogleAuthProvider.credentialFromError(error);
-//     // ...
-//   });
+const monitorAuthState = async () => {
+    onAuthStateChanged(auth, user => {
+        if (user) {
+            console.log(user)
+            const showLoginState = (user) => {
+                loginState.innerHTML = `You're logged in as ${user.displayName} (uid: ${user.uid}, email: ${user.email}) `
+              }
+            showLoginState(user)
+        }
+        else {
+            loginState.innerHTML = "You're not logged in fool"
+        }
+    })
+    
+}
+
+monitorAuthState()
+
+const logout = async () => {
+    await signOut(auth)
+}
+
+logoutBtn.addEventListener('click', logout)
+
+const googleLogin = () => {
+    const googleProvider = new GoogleAuthProvider
+    signInWithPopup(auth, googleProvider)
+    .then(() => {
+        window.location.assign('./profile')
+    })
+    .catch(error => {
+        console.error(error)
+    })
+}
+
+googleLoginButton.addEventListener('click', googleLogin)
+
 
 //   initApp = function() {
 //     firebase.auth().onAuthStateChanged(function(user) {
@@ -167,18 +184,6 @@ signupButton.addEventListener("click", createAccount);
 //     }
 //   };
 
-//   createUserWithEmailAndPassword(auth, email, password)
-//     .then((userCredential) => {
-//       // Signed in
-//       const user = userCredential.user;
-//       // ...
-//     })
-//     .catch((error) => {
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-//       // ..
-//     });
-
 //       signInWithCustomToken(auth, token)
 //         .then((userCredential) => {
 //           // Signed in
@@ -190,12 +195,6 @@ signupButton.addEventListener("click", createAccount);
 //           const errorMessage = error.message;
 //           // ...
 //         });
-
-//         signOut(auth).then(() => {
-//             // Sign-out successful.
-//           }).catch((error) => {
-//             // An error happened.
-//           });
 
 openModal.forEach((button) => {
   button.addEventListener("click", () => {
